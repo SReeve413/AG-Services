@@ -9,7 +9,13 @@ import { LoggerService } from './logger.service';
 })
 export class DataService {
 
+  mostPopularBook: Book = allBooks[0];
+
   constructor(private loggerService: LoggerService) { }
+
+  setMostPopularBook(popularBook: Book): void {
+    this.mostPopularBook = popularBook;
+  }
 
   getAllReaders(): Reader[] {
     return allReaders;
