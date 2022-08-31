@@ -195,10 +195,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AppModule": () => (/* binding */ AppModule)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! tslib */ 4762);
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/platform-browser */ 9075);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/core */ 7716);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/forms */ 3679);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! tslib */ 4762);
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/platform-browser */ 9075);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 7716);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/forms */ 3679);
 /* harmony import */ var _add_book_add_book_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./add-book/add-book.component */ 9884);
 /* harmony import */ var _add_reader_add_reader_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./add-reader/add-reader.component */ 4808);
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./app.component */ 5041);
@@ -208,8 +208,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _edit_reader_edit_reader_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./edit-reader/edit-reader.component */ 6236);
 /* harmony import */ var _core_logger_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./core/logger.service */ 6383);
 /* harmony import */ var _core_data_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./core/data.service */ 3943);
-/* harmony import */ var _core_data_service_factory__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./core/data.service.factory */ 101);
-
 
 
 
@@ -225,8 +223,8 @@ __webpack_require__.r(__webpack_exports__);
 
 let AppModule = class AppModule {
 };
-AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_10__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_11__.NgModule)({
+AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_10__.NgModule)({
         declarations: [
             _app_component__WEBPACK_IMPORTED_MODULE_2__.AppComponent,
             _dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_4__.DashboardComponent,
@@ -236,47 +234,25 @@ AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_10__.__decorate)([
             _add_reader_add_reader_component__WEBPACK_IMPORTED_MODULE_1__.AddReaderComponent
         ],
         imports: [
-            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_12__.BrowserModule,
+            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_11__.BrowserModule,
             _app_routing_module__WEBPACK_IMPORTED_MODULE_3__.AppRoutingModule,
-            _angular_forms__WEBPACK_IMPORTED_MODULE_13__.FormsModule
+            _angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormsModule
         ],
         providers: [
             // PlainLoggerService,
             // {provide: LoggerService, useExisting: PlainLoggerService },
-            { provide: _core_logger_service__WEBPACK_IMPORTED_MODULE_7__.LoggerService, useValue: {
-                    log: (message) => console.log(`MESSAGE: ${message}`),
-                    error: (message) => console.error(`PROBLEM: ${message}`)
-                } },
-            { provide: _core_data_service__WEBPACK_IMPORTED_MODULE_8__.DataService, useFactory: _core_data_service_factory__WEBPACK_IMPORTED_MODULE_9__.dataServiceFactory, deps: [_core_logger_service__WEBPACK_IMPORTED_MODULE_7__.LoggerService] },
-            // DataService
+            // {provide: LoggerService, useValue : {
+            //   log: (message: string) => console.log(`MESSAGE: ${message}`),
+            //   error: (message: string) => console.error(`PROBLEM: ${message}`)
+            // }},
+            // {provide: DataService, useFactory: dataServiceFactory, deps: [LoggerService] },
+            _core_logger_service__WEBPACK_IMPORTED_MODULE_7__.LoggerService,
+            _core_data_service__WEBPACK_IMPORTED_MODULE_8__.DataService
         ],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_2__.AppComponent]
     })
 ], AppModule);
 
-
-
-/***/ }),
-
-/***/ 101:
-/*!**********************************************!*\
-  !*** ./src/app/core/data.service.factory.ts ***!
-  \**********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "dataServiceFactory": () => (/* binding */ dataServiceFactory)
-/* harmony export */ });
-/* harmony import */ var _data_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data.service */ 3943);
-
-function dataServiceFactory(logger) {
-    let dataService = new _data_service__WEBPACK_IMPORTED_MODULE_0__.DataService(logger);
-    // Do more stuff to configure the service if neccessary
-    logger.log('Creating a new Data Service with a factory function.');
-    return _data_service__WEBPACK_IMPORTED_MODULE_0__.DataService;
-}
 
 
 /***/ }),
@@ -496,7 +472,8 @@ EditBookComponent.ctorParameters = () => [
 EditBookComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
         selector: 'app-edit-book',
-        template: _raw_loader_edit_book_component_html__WEBPACK_IMPORTED_MODULE_0__.default
+        template: _raw_loader_edit_book_component_html__WEBPACK_IMPORTED_MODULE_0__.default,
+        providers: [app_core_data_service__WEBPACK_IMPORTED_MODULE_1__.DataService]
     })
 ], EditBookComponent);
 

@@ -31,13 +31,13 @@ import { dataServiceFactory } from './core/data.service.factory';
   providers: [
     // PlainLoggerService,
     // {provide: LoggerService, useExisting: PlainLoggerService },
-    {provide: LoggerService, useValue : {
-      log: (message: string) => console.log(`MESSAGE: ${message}`),
-      error: (message: string) => console.error(`PROBLEM: ${message}`)
-    }},
-    {provide: DataService, useFactory: dataServiceFactory, deps: [LoggerService] },
-
-    // DataService
+    // {provide: LoggerService, useValue : {
+    //   log: (message: string) => console.log(`MESSAGE: ${message}`),
+    //   error: (message: string) => console.error(`PROBLEM: ${message}`)
+    // }},
+    // {provide: DataService, useFactory: dataServiceFactory, deps: [LoggerService] },
+    LoggerService,
+    DataService
   ],
   bootstrap: [AppComponent]
 })
