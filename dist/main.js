@@ -309,11 +309,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "DataService": () => (/* binding */ DataService)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4762);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ 841);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 7716);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 4762);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common/http */ 841);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 7716);
 /* harmony import */ var app_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! app/data */ 8387);
-/* harmony import */ var _logger_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./logger.service */ 6383);
+/* harmony import */ var app_models_bookTrackerError__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! app/models/bookTrackerError */ 582);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ 205);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ 5304);
+/* harmony import */ var _logger_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./logger.service */ 6383);
+
+
+
 
 
 
@@ -329,7 +335,15 @@ let DataService = class DataService {
         this.mostPopularBook = popularBook;
     }
     getAllReaders() {
-        return this.http.get('/api/errors/500');
+        return this.http.get('/api/readers')
+            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.catchError)(this.handleError));
+    }
+    handleError(error) {
+        let dataError = new app_models_bookTrackerError__WEBPACK_IMPORTED_MODULE_1__.BookTrackerError();
+        dataError.errorNumber = 100;
+        dataError.message = error.statusText;
+        dataError.friendlyMessage = 'An error Occurred retrieving data.';
+        return (0,rxjs__WEBPACK_IMPORTED_MODULE_4__.throwError)(dataError);
     }
     getReaderById(id) {
         return app_data__WEBPACK_IMPORTED_MODULE_0__.allReaders.find(reader => reader.readerID === id);
@@ -342,11 +356,11 @@ let DataService = class DataService {
     }
 };
 DataService.ctorParameters = () => [
-    { type: _logger_service__WEBPACK_IMPORTED_MODULE_1__.LoggerService },
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpClient }
+    { type: _logger_service__WEBPACK_IMPORTED_MODULE_2__.LoggerService },
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_5__.HttpClient }
 ];
-DataService = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Injectable)()
+DataService = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.Injectable)()
 ], DataService);
 
 
@@ -415,7 +429,7 @@ let DashboardComponent = class DashboardComponent {
     ngOnInit() {
         this.allBooks = this.dataService.getAllBooks();
         this.dataService.getAllReaders()
-            .subscribe(data => this.allReaders = data, err => console.log(err), () => this.loggerService.log('All done getting readers!'));
+            .subscribe((data) => this.allReaders = data, (err) => this.loggerService.log(err.friendlyMessage), () => this.loggerService.log('All done getting readers!'));
         this.mostPopularBook = this.dataService.mostPopularBook;
         this.loggerService.log('DOne with dashboard Init');
     }
@@ -578,6 +592,23 @@ EditReaderComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
     })
 ], EditReaderComponent);
 
+
+
+/***/ }),
+
+/***/ 582:
+/*!********************************************!*\
+  !*** ./src/app/models/bookTrackerError.ts ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "BookTrackerError": () => (/* binding */ BookTrackerError)
+/* harmony export */ });
+class BookTrackerError {
+}
 
 
 /***/ }),
