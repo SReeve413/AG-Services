@@ -199,6 +199,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/platform-browser */ 9075);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 7716);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/forms */ 3679);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/common/http */ 841);
 /* harmony import */ var _add_book_add_book_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./add-book/add-book.component */ 9884);
 /* harmony import */ var _add_reader_add_reader_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./add-reader/add-reader.component */ 4808);
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./app.component */ 5041);
@@ -208,6 +209,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _edit_reader_edit_reader_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./edit-reader/edit-reader.component */ 6236);
 /* harmony import */ var _core_logger_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./core/logger.service */ 6383);
 /* harmony import */ var _core_data_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./core/data.service */ 3943);
+
 
 
 
@@ -236,7 +238,8 @@ AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__decorate)([
         imports: [
             _angular_platform_browser__WEBPACK_IMPORTED_MODULE_11__.BrowserModule,
             _app_routing_module__WEBPACK_IMPORTED_MODULE_3__.AppRoutingModule,
-            _angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormsModule
+            _angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormsModule,
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_13__.HttpClientModule
         ],
         providers: [
             // PlainLoggerService,
@@ -257,7 +260,7 @@ AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__decorate)([
 
 /***/ }),
 
-/***/ 856:
+/***/ 8856:
 /*!***************************************!*\
   !*** ./src/app/core/badge.service.ts ***!
   \***************************************/
@@ -306,24 +309,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "DataService": () => (/* binding */ DataService)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 4762);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 7716);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4762);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ 841);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 7716);
 /* harmony import */ var app_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! app/data */ 8387);
 /* harmony import */ var _logger_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./logger.service */ 6383);
 
 
 
 
+
 let DataService = class DataService {
-    constructor(loggerService) {
+    constructor(loggerService, http) {
         this.loggerService = loggerService;
+        this.http = http;
         this.mostPopularBook = app_data__WEBPACK_IMPORTED_MODULE_0__.allBooks[0];
     }
     setMostPopularBook(popularBook) {
         this.mostPopularBook = popularBook;
     }
     getAllReaders() {
-        return app_data__WEBPACK_IMPORTED_MODULE_0__.allReaders;
+        return this.http.get('/api/errors/500');
     }
     getReaderById(id) {
         return app_data__WEBPACK_IMPORTED_MODULE_0__.allReaders.find(reader => reader.readerID === id);
@@ -336,10 +342,11 @@ let DataService = class DataService {
     }
 };
 DataService.ctorParameters = () => [
-    { type: _logger_service__WEBPACK_IMPORTED_MODULE_1__.LoggerService }
+    { type: _logger_service__WEBPACK_IMPORTED_MODULE_1__.LoggerService },
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpClient }
 ];
-DataService = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)()
+DataService = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Injectable)()
 ], DataService);
 
 
@@ -407,8 +414,10 @@ let DashboardComponent = class DashboardComponent {
     }
     ngOnInit() {
         this.allBooks = this.dataService.getAllBooks();
-        this.allReaders = this.dataService.getAllReaders();
+        this.dataService.getAllReaders()
+            .subscribe(data => this.allReaders = data, err => console.log(err), () => this.loggerService.log('All done getting readers!'));
         this.mostPopularBook = this.dataService.mostPopularBook;
+        this.loggerService.log('DOne with dashboard Init');
     }
     deleteBook(bookID) {
         console.warn(`Delete book not yet implemented (bookID: ${bookID}).`);
@@ -533,7 +542,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _raw_loader_edit_reader_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !raw-loader!./edit-reader.component.html */ 4644);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 7716);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ 9895);
-/* harmony import */ var app_core_badge_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! app/core/badge.service */ 856);
+/* harmony import */ var app_core_badge_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! app/core/badge.service */ 8856);
 /* harmony import */ var app_core_data_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! app/core/data.service */ 3943);
 
 
