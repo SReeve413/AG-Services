@@ -34,6 +34,16 @@ export class DashboardComponent implements OnInit {
       )
     this.mostPopularBook = this.dataService.mostPopularBook;
 
+
+    this.dataService.getAuthorRecommendation(1)
+    .then(
+      (author: string) => {
+        this.loggerService.log(author)
+      },
+      (err: string) => this.loggerService.error(`The promise was rejected: ${err}`)
+    )
+    .catch((error: Error) => this.loggerService.error(error.message));
+
     this.loggerService.log('DOne with dashboard Init');
   }
 
