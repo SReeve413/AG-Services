@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , Version, VERSION} from '@angular/core';
+import { Title } from '@angular/platform-browser';
+
 
 import { Book } from "app/models/book";
 import { Reader } from "app/models/reader";
@@ -19,7 +21,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private loggerService: LoggerService,
-    private dataService: DataService
+    private dataService: DataService,
+    private title: Title
     ) {
       this.loggerService.log('Dashboard Created')
      }
@@ -44,10 +47,12 @@ export class DashboardComponent implements OnInit {
     // )
     // .catch((error: Error) => this.loggerService.error(error.message));
 
-    this.getAuthorRecommendationAsync(-1)
+    this.getAuthorRecommendationAsync(1)
         .catch (error =>  {
           this.loggerService.error(error);
         })
+
+        this.title.setTitle(`Book Tracker ${VERSION.full}`)
     this.loggerService.log('DOne with dashboard Init');
   }
 

@@ -422,9 +422,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "DashboardComponent": () => (/* binding */ DashboardComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4762);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 4762);
 /* harmony import */ var _raw_loader_dashboard_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !raw-loader!./dashboard.component.html */ 9306);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 7716);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 7716);
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/platform-browser */ 9075);
 /* harmony import */ var app_core_logger_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! app/core/logger.service */ 6383);
 /* harmony import */ var app_core_data_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! app/core/data.service */ 3943);
 
@@ -432,10 +433,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 let DashboardComponent = class DashboardComponent {
-    constructor(loggerService, dataService) {
+    constructor(loggerService, dataService, title) {
         this.loggerService = loggerService;
         this.dataService = dataService;
+        this.title = title;
         this.loggerService.log('Dashboard Created');
     }
     ngOnInit() {
@@ -451,14 +454,15 @@ let DashboardComponent = class DashboardComponent {
         //   (err: string) => this.loggerService.error(`The promise was rejected: ${err}`)
         // )
         // .catch((error: Error) => this.loggerService.error(error.message));
-        this.getAuthorRecommendationAsync(-1)
+        this.getAuthorRecommendationAsync(1)
             .catch(error => {
             this.loggerService.error(error);
         });
+        this.title.setTitle(`Book Tracker ${_angular_core__WEBPACK_IMPORTED_MODULE_3__.VERSION.full}`);
         this.loggerService.log('DOne with dashboard Init');
     }
     getAuthorRecommendationAsync(readerID) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, function* () {
             let author = yield this.dataService.getAuthorRecommendation(readerID);
             this.loggerService.log(author);
         });
@@ -472,10 +476,11 @@ let DashboardComponent = class DashboardComponent {
 };
 DashboardComponent.ctorParameters = () => [
     { type: app_core_logger_service__WEBPACK_IMPORTED_MODULE_1__.LoggerService },
-    { type: app_core_data_service__WEBPACK_IMPORTED_MODULE_2__.DataService }
+    { type: app_core_data_service__WEBPACK_IMPORTED_MODULE_2__.DataService },
+    { type: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_5__.Title }
 ];
-DashboardComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Component)({
+DashboardComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
         selector: 'app-dashboard',
         template: _raw_loader_dashboard_component_html__WEBPACK_IMPORTED_MODULE_0__.default
     })
